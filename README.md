@@ -54,8 +54,8 @@ Our goal is not just to compete, but to **learn, experiment, and push boundaries
 ---
 
 ## 📌 Submission Note
-This repository contains the **abstract submission** for Round 2.  
-Future updates will include our prototype, codebase, and presentation deck.
+This repository contains the **abstract submission**.  
+Future updates will include my prototype, codebase, and presentation deck.
 
 ---
 
