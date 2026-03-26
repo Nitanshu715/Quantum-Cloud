@@ -5,4 +5,3 @@ scipy
 matplotlib
 pandas
 streamlit==1.32.0
-pillow>=10.0.0
