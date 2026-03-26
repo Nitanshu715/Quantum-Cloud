@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+
+numpy
+pandas
+matplotlib
+scipy
+
+qiskit
+qiskit-aer
