@@ -1,7 +1,11 @@
-qiskit==2.3.1
-qiskit-aer==0.17.2
-numpy==1.26.4
-scipy
-matplotlib
-pandas
 streamlit==1.32.0
+
+numpy==1.26.4
+pandas==2.2.2
+matplotlib==3.7.5
+scipy==1.11.4
+
+pillow==9.5.0
+
+qiskit==1.0.2
+qiskit-aer==0.13.3
