@@ -22,8 +22,7 @@
 
 <br/>
 
-> **Quantum Computing Hackathon 2025 · Round 2**  
-> Team Double Epsilons · Nitanshu Tak · UPES, Dehradun
+> **By: Nitanshu Tak**
 
 <br/>
 
