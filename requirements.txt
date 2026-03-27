@@ -1,3 +1,9 @@
-streamlit>=1.33.0
+streamlit==1.55.0
 requests
+
+numpy==2.4.3
+pandas==2.3.3
+matplotlib==3.10.8
+
 altair>=5.0.0
+pillow>=12.0.0
