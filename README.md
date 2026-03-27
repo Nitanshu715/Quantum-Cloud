@@ -9,7 +9,7 @@
 <br/><br/>
 
 <p align="center">
-  <a href="https://quantum-cloud-resource-scheduler.streamlit.app/">
+  <a href="https://the-quantum-cloud-resource-scheduler.streamlit.app/">
     <img src="https://img.shields.io/badge/Live%20Demo-Streamlit-brightgreen?style=for-the-badge&logo=streamlit" />
   </a>
 </p>
