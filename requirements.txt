@@ -8,3 +8,6 @@ scipy
 
 qiskit
 qiskit-aer
+
+streamlit
+requests
