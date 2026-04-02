@@ -20,8 +20,11 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import pandas as pd
 import json
+import requests
 import time
 from typing import Optional
+
+API_URL = "https://quantum-cloud.onrender.com"
 
 # Page config
 st.set_page_config(
@@ -207,33 +210,21 @@ if run_sa:
     run_solver("SA", lambda: SimulatedAnnealingSolver(problem, n_reads=500).solve())
 
 if run_qaoa:
-    if problem.n_vars > 16:
-        st.warning(f"n_vars={problem.n_vars} > 16. QAOA may be slow. Proceeding...")
-    solver = QAOASolver(
-        problem,
-        p_layers=p_layers,
-        n_shots=n_shots,
-        backend=backend_key,
-        verbose=False,
-    )
-    with st.spinner(f"Running QAOA (p={p_layers}, {n_shots} shots)..."):
-        x, m = solver.solve(n_restarts=n_restarts)
-        m["wall_time"] = time.time()
-        m["energy_convergence"] = solver.energy_history
-        m["counts"] = solver._result_counts
-        st.session_state.results["QAOA"] = {"x": x, "metrics": m, "solver": solver}
-    st.success(f"QAOA done! Energy: {m['energy']:.4f}, Feasible: {m['feasible']}")
+    with st.spinner("Running QAOA via backend..."):
+        res = requests.get(f"{API_URL}/qaoa")
+        data = res.json()
+
+        st.session_state.results["QAOA"] = {
+            "x": data.get("x", []),
+            "metrics": data
+        }
+
+    st.success(f"QAOA done! Energy: {data.get('energy')}, Feasible: {data.get('feasible')}")
 
 if run_all:
-    scheduler = HybridScheduler(
-        problem,
-        qaoa_p_layers=p_layers,
-        qaoa_shots=n_shots,
-        qaoa_backend=backend_key,
-        verbose=False,
-    )
     with st.spinner("Running full benchmark (Greedy + SA + QAOA)..."):
-        comparison = scheduler.run_comparison(include_brute_force=(problem.n_vars <= 16))
+        res = requests.get(f"{API_URL}/compare")
+        comparison = res.json()
     for name in ["greedy", "sa", "brute_force", "qaoa"]:
         if name in comparison:
             st.session_state.results[name.upper()] = {
