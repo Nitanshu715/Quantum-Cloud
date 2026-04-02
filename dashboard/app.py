@@ -227,9 +227,14 @@ if run_all:
         comparison = res.json()
     for name in ["greedy", "sa", "brute_force", "qaoa"]:
         if name in comparison:
-            st.session_state.results[name.upper()] = {
-                "x": comparison[name].get("x", []),
-                "metrics": comparison[name]["metrics"],
+            entry = comparison[name]
+
+            # handle both formats
+            metrics = entry.get("metrics", entry)
+            
+    st.session_state.results[name.upper()] = {
+                "x": entry.get("x", []),
+                "metrics": metrics,
             }
     st.success("Full benchmark complete!")
 
@@ -306,18 +311,24 @@ if st.session_state.results:
 
             cpu_used = []
             mem_used = []
-            cpu_caps = [n.cpu_cap for n in problem.nodes]
-            mem_caps = [n.mem_cap for n in problem.nodes]
-
+            
+            valid_x = len(x) == problem.n_vars
+            
             for j, node in enumerate(problem.nodes):
-                cpu_used.append(sum(
-                    problem.jobs[i].cpu * x[problem.var_index(i, j)]
-                    for i in range(problem.n_jobs)
-                ))
-                mem_used.append(sum(
-                    problem.jobs[i].mem * x[problem.var_index(i, j)]
-                    for i in range(problem.n_jobs)
-                ))
+                cpu_sum = 0
+                mem_sum = 0
+            
+                for i in range(problem.n_jobs):
+                    if valid_x:
+                        val = x[problem.var_index(i, j)]
+                    else:
+                        val = 0
+            
+                    cpu_sum += problem.jobs[i].cpu * val
+                    mem_sum += problem.jobs[i].mem * val
+            
+                cpu_used.append(cpu_sum)
+                mem_used.append(mem_sum)
 
             y = range(problem.n_nodes)
             axes[0].barh(y, cpu_used, color="#5b8ff9", alpha=0.8, label="Used")
