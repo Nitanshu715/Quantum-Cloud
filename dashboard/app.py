@@ -294,7 +294,14 @@ if st.session_state.results:
             fig.tight_layout()
             st.pyplot(fig)
 
-            violations = problem.constraint_violations(x)
+            if len(x) == problem.n_vars:
+                violations = problem.constraint_violations(x)
+            else:
+                violations = {
+                    "unassigned_jobs": [],
+                    "cpu_overload": [],
+                    "mem_overload": []
+                }
             if violations["unassigned_jobs"]:
                 st.error(f"Unassigned: {violations['unassigned_jobs']}")
             if violations["cpu_overload"]:
