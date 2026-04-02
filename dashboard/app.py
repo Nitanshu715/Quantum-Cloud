@@ -228,7 +228,7 @@ if run_all:
     for name in ["greedy", "sa", "brute_force", "qaoa"]:
         if name in comparison:
             st.session_state.results[name.upper()] = {
-                "x": comparison[name]["x"],
+                "x": comparison[name].get("x", []),
                 "metrics": comparison[name]["metrics"],
             }
     st.success("Full benchmark complete!")
@@ -267,7 +267,10 @@ if st.session_state.results:
             alloc = np.zeros((problem.n_jobs, problem.n_nodes))
             for i in range(problem.n_jobs):
                 for j in range(problem.n_nodes):
-                    alloc[i, j] = x[problem.var_index(i, j)]
+                    if len(x) == problem.n_vars:
+                      alloc[i, j] = x[problem.var_index(i, j)]
+                    else:
+                      alloc[i, j] = 0
 
             fig, ax = plt.subplots(figsize=(max(4, problem.n_nodes * 1.2), max(3, problem.n_jobs)))
             im = ax.imshow(alloc, cmap="Blues", vmin=0, vmax=1, aspect="auto")
