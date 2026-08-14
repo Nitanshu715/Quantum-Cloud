@@ -11,7 +11,7 @@
 [![Plotly](https://img.shields.io/badge/Plotly-Interactive-3F4F75?style=flat-square&logo=plotly&logoColor=white)](https://plotly.com)
 [![License](https://img.shields.io/badge/License-MIT-black?style=flat-square)](#license)
 
-[**▶ Live Demo**](https://quantum-cloud-resource-scheduler.streamlit.app/) · [Full Technical Guide](./QCRS_Complete_Technical_Guide.md) · [Report a bug](../../issues)
+[**▶ Live Demo**](https://quantum-cloud-resource-scheduler.streamlit.app/) · [Full Technical Guide](https://github.com/Nitanshu715/Quantum-Cloud/blob/main/QCRS_Repo_Documentation.docx) · [Report a bug](../../issues)
 
 </div>
 
