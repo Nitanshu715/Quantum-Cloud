@@ -81,6 +81,16 @@ class SchedulingProblem:
         if self.penalty_mem == 0.0:
             self.penalty_mem = self.penalty_cpu * 0.5   # total binary variables
 
+        # Safety guarantee: the capacity terms below penalize utilization
+        # unconditionally (not just overload), so a large job's own
+        # utilization-penalty can otherwise exceed the cost of leaving it
+        # unassigned -- the solver then "solves" the problem by skipping
+        # that job. Re-inflate penalty_assign so placing any single job
+        # anywhere, even alone at 100% utilization of both CPU and memory,
+        # is always strictly cheaper than not placing it at all.
+        worst_case_util_penalty = self.penalty_cpu + self.penalty_mem
+        self.penalty_assign = max(self.penalty_assign, 1.5 * worst_case_util_penalty)
+
     def var_index(self, i: int, j: int) -> int:
         """Flatten (job i, node j) -> single variable index."""
         return i * self.n_nodes + j
